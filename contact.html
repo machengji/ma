@@ -2,9 +2,41 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+
+	<style>
+		.custom-content-marker {
+			position: relative;
+			width: 25px;
+			height: 34px;
+		}
+
+		.custom-content-marker img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.custom-content-marker .close-btn {
+			position: absolute;
+			top: -6px;
+			right: -8px;
+			width: 15px;
+			height: 15px;
+			font-size: 12px;
+			background: #ccc;
+			border-radius: 50%;
+			color: #fff;
+			text-align: center;
+			line-height: 15px;
+			box-shadow: -1px 1px 1px rgba(10, 10, 10, .2);
+		}
+
+		.custom-content-marker .close-btn:hover {
+			background: #666;
+		}
+	</style>
 
 
 	<!-- Favicons -->
@@ -14,48 +46,85 @@
 	<link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
 	<link rel="shortcut icon" href="assets/images/favicons/favicon.png" type="image/png">
 
-    <!-- Styles -->
-	<link rel="stylesheet" type="text/css" href="assets/styles/style.css"/>
-    <link rel="stylesheet" type="text/css" href="assets/demo/style-demo.css"/>
-	
+	<!-- Styles -->
+	<link rel="stylesheet" type="text/css" href="assets/styles/style.css" />
+	<link rel="stylesheet" type="text/css" href="assets/demo/style-demo.css" />
+	<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+
 	<!-- Mapbox-->
-	<script type="text/javascript" src="https://api.map.baidu.com/api?v=1.0&&type=webgl&ak=dplL2Sl2zdx5moL5KVkwMp0Bi8oOWHVm">
+	<script type="text/javascript">
+		window._AMapSecurityConfig = {
+			securityJsCode: "969d8c5a0bdc8f18b2d4dd949fadbaea",
+		}
 	</script>
-    <!-- <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script> -->
-	
-    <!-- <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' /> -->
-	<style type="text/css">  
-		#container{height:100%}    
-	</style> 
-	
+	<script src="https://webapi.amap.com/loader.js"></script>
+	<script type="text/javascript">
+		AMapLoader.load({
+			key: "6381860712828e57917d1b9390bb9b7e",       // 申请好的Web端开发者Key，首次调用 load 时必填
+			version: "2.0",                 // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+		}).then((AMap) => {
+			const map = new AMap.Map('contain', {
+				viewMode: '2D',  // 默认使用 2D 模式
+				zoom: 13,  //初始化地图层级
+				center: [110.40953294769287, 20.042208583807113]  //初始化地图中心点
+			});
+
+			const markerContent = '' +
+				'<div class="custom-content-marker">' +
+				'   <img src="assets/icons/地图标点.png">' +
+				'   <div class="close-btn" onclick="clearMarker()">X</div>' +
+				'</div>';
+			const position = new AMap.LngLat(110.4075, 20.04309); // Marker经纬度
+			const marker = new AMap.Marker({
+				position: position,
+				content: markerContent, // 将 html 传给 content
+				offset: new AMap.Pixel(-13, -30) // 以 icon 的 [center bottom] 为原点
+			});
+			map.add(marker);
+		}).catch((e) => {
+			console.error(e);  //加载错误提示
+		});
+
+		// 点标记显示内容，HTML要素字符串
+
+	</script>
+	</script>
+	<!-- <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script> -->
+
+	<!-- <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' /> -->
+
+
 </head>
+
 <body>
-    <!-- Preloader -->
-    <div class="preloader">
-	    <div class="preloader__wrap">
-		    <div class="circle-pulse">
-                <div class="circle-pulse__1"></div>
-                <div class="circle-pulse__2"></div>
-            </div>
-		    <div class="preloader__progress"><span></span></div>
+
+
+	<!-- Preloader -->
+	<div class="preloader">
+		<div class="preloader__wrap">
+			<div class="circle-pulse">
+				<div class="circle-pulse__1"></div>
+				<div class="circle-pulse__2"></div>
+			</div>
+			<div class="preloader__progress"><span></span></div>
 		</div>
 	</div>
 
-    <main class="main">
-	    <!-- Header Image -->
+	<main class="main">
+		<!-- Header Image -->
 		<div class="header-image">
-		    <div class="js-parallax" style="background-image: url(assets/img/image_header.jpg);"></div>
+			<div class="js-parallax" style="background-image: url(assets/img/image_header.jpg);"></div>
 		</div>
-		
-	    <div class="container gutter-top">
-		    <!-- Header -->
-		    <header class="header box">
-			    <div class="header__left">
-				    <div class="header__photo">
-					    <img class="header__photo-img" src="assets/img/ma.jpg" alt="Ronald Robertson">
+
+		<div class="container gutter-top">
+			<!-- Header -->
+			<header class="header box">
+				<div class="header__left">
+					<div class="header__photo">
+						<img class="header__photo-img" src="assets/img/ma.jpg" alt="Ronald Robertson">
 					</div>
 					<div class="header__base-info">
-					    <h4 class="title titl--h4">马成继</h4>
+						<h4 class="title titl--h4">马成继</h4>
 						<div class="status">前端开发工程师</div>
 						<!-- <ul class="header__social">
 						    <li><a href="https://www.facebook.com"><i class="font-icon icon-facebook1"></i></a></li>
@@ -65,103 +134,118 @@
 					</div>
 				</div>
 				<div class="header__right">
-				    <ul class="header__contact">
-					    <li><span class="overhead">邮箱</span>672277097@qq.com</li>
+					<ul class="header__contact">
+						<li><span class="overhead">邮箱</span>672277097@qq.com</li>
 						<li><span class="overhead">电话</span>18625352935</li>
 					</ul>
 					<ul class="header__contact">
-					    <li><span class="overhead">生日</span>2002.10.29</li>
+						<li><span class="overhead">生日</span>2002.10.29</li>
 						<li><span class="overhead">坐标</span>海南海口</li>
 					</ul>
 				</div>
 			</header>
-			
+
 			<div class="row sticky-parent">
-			    <!-- Sidebar nav -->
-                <aside class="col-12 col-md-12 col-lg-2">
-				    <div class="sidebar box sticky-column">
-	                    <ul class="nav">
-                            <li class="nav__item"><a href="index.html"><i class="icon-user"></i>关于我</a></li>
+				<!-- Sidebar nav -->
+				<aside class="col-12 col-md-12 col-lg-2">
+					<div class="sidebar box sticky-column">
+						<ul class="nav">
+							<li class="nav__item"><a href="index.html"><i class="icon-user"></i>关于我</a></li>
 							<li class="nav__item"><a href="resume.html"><i class="icon-file-text"></i>简历</a></li>
-                            <li class="nav__item"><a href="works.html"><i class="icon-codesandbox"></i> 摄影作品</a></li>
-                            <li class="nav__item"><a href="blog.html"><i class="icon-book-open"></i>博客</a></li>
-                            <li class="nav__item"><a class="active" href="contact.html"><i class="icon-book"></i>联系我</a></li>
-                        </ul>
+							<li class="nav__item"><a href="works.html"><i class="icon-codesandbox"></i> 摄影作品</a></li>
+							<li class="nav__item"><a href="blog.html"><i class="icon-book-open"></i>博客</a></li>
+							<li class="nav__item"><a class="active" href="contact.html"><i class="icon-book"></i>联系我</a>
+							</li>
+						</ul>
 					</div>
-		        </aside>
-				
+				</aside>
+
 				<!-- Content -->
-		        <div class="col-12 col-md-12 col-lg-10">
-				    <div class="box box-content">
-					    <div class="pb-2">
-		                    <h1 class="title title--h1 first-title title__separate">联系我</h1>
-					    </div>
+				<div class="col-12 col-md-12 col-lg-10">
+					<div class="box box-content">
+						<div class="pb-2">
+							<h1 class="title title--h1 first-title title__separate">联系我</h1>
+						</div>
 
 						<!-- Contact -->
-						<div id="container" class="map"></div> 
-                        <!-- <div class="map" id="map"></div> -->
-						<h2 class="title title--h3">Contact Form</h2>
-							
+
+						<div class="map" id="contain"></div>
+						<h2 class="title title--h3">联系表单</h2>
+
 						<form id="contact-form" class="contact-form" data-toggle="validator">
-                            <div class="row">
-				                <div class="form-group col-12 col-md-6">
-                                    <input type="text" class="form-control" id="nameContact" name="nameContact" placeholder="Full name" required="required" autocomplete="on" oninvalid="setCustomValidity('Fill in the field')" onkeyup="setCustomValidity('')">
-								    <div class="help-block with-errors"></div>
-				                </div>
-				                <div class="form-group col-12 col-md-6">
-                                    <input type="email" class="form-control" id="emailContact" name="emailContact" placeholder="Email address" required="required" autocomplete="on" oninvalid="setCustomValidity('Email is incorrect')" onkeyup="setCustomValidity('')">
-								    <div class="help-block with-errors"></div>
-				                </div>
-				                <div class="form-group col-12 col-md-12">
-                                    <textarea class="textarea form-control" id="messageContact" name="messageContact" placeholder="Your Message"  rows="4" required="required" oninvalid="setCustomValidity('Fill in the field')" onkeyup="setCustomValidity('')"></textarea>
-								    <div class="help-block with-errors"></div>
-				                </div>
-						    </div>
 							<div class="row">
-				                <div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
-					                <div id="validator-contact" class="hidden"></div>
-				                </div>
-				                <div class="col-12 col-md-6 order-1 order-md-2 text-right">
-					                <button type="submit" class="btn"><i class="font-icon icon-send"></i> Send Message</button>
-				                </div>
-			                </div>
-		                </form>
+								<!-- <div class="form-group col-12 col-md-6">
+									<input type="text" class="form-control" id="nameContact" name="nameContact"
+										placeholder="名字" required="required" autocomplete="on"
+										oninvalid="setCustomValidity('填写字段')"
+										onkeyup="setCustomValidity('')">
+									<div class="help-block with-errors"></div>
+								</div> -->
+								<div class="form-group col-12 col-md-6">
+									<input type="邮箱" class="form-control" id="emailContact" name="emailContact"
+										placeholder="名字" required="required" autocomplete="on"
+										oninvalid="setCustomValidity('填写字段')" onkeyup="setCustomValidity('')">
+									<div class="help-block with-errors"></div>
+								</div>
+								<div class="form-group col-12 col-md-6">
+									<input type="邮箱" class="form-control" id="emailContact" name="emailContact"
+										placeholder="邮箱" required="required" autocomplete="on"
+										oninvalid="setCustomValidity('电子邮件不正确')" onkeyup="setCustomValidity('')">
+									<div class="help-block with-errors"></div>
+								</div>
+								<div class="form-group col-12 col-md-12">
+									<textarea class="textarea form-control" id="messageContact" name="messageContact"
+										placeholder="你的消息" rows="4" required="required"
+										oninvalid="setCustomValidity('填写字段')"
+										onkeyup="setCustomValidity('')"></textarea>
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
+									<div id="validator-contact" class="hidden"></div>
+								</div>
+								<div class="col-12 col-md-6 order-1 order-md-2 text-right">
+									<button type="submit" class="btn"><i class="font-icon icon-send"></i> Send
+										Message</button>
+								</div>
+							</div>
+						</form>
 					</div>
-					
+
 					<!-- Footer -->
 					<footer class="footer">© 2023 ma</footer>
-		        </div>
+				</div>
 			</div>
-		</div>	
-    </main>
+		</div>
+	</main>
 
-    <div class="back-to-top"></div>
-	
-    <!-- SVG masks -->
-    <svg class="svg-defs">
-        <clipPath id="avatar-box">
-            <path d="M1.85379 38.4859C2.9221 18.6653 18.6653 2.92275 38.4858 1.85453 56.0986.905299 77.2792 0 94 0c16.721 0 37.901.905299 55.514 1.85453 19.821 1.06822 35.564 16.81077 36.632 36.63137C187.095 56.0922 188 77.267 188 94c0 16.733-.905 37.908-1.854 55.514-1.068 19.821-16.811 35.563-36.632 36.631C131.901 187.095 110.721 188 94 188c-16.7208 0-37.9014-.905-55.5142-1.855-19.8205-1.068-35.5637-16.81-36.63201-36.631C.904831 131.908 0 110.733 0 94c0-16.733.904831-37.9078 1.85379-55.5141z"/>
-        </clipPath>
-        <clipPath id="avatar-hexagon">
-             <path d="M0 27.2891c0-4.6662 2.4889-8.976 6.52491-11.2986L31.308 1.72845c3.98-2.290382 8.8697-2.305446 12.8637-.03963l25.234 14.31558C73.4807 18.3162 76 22.6478 76 27.3426V56.684c0 4.6805-2.5041 9.0013-6.5597 11.3186L44.4317 82.2915c-3.9869 2.278-8.8765 2.278-12.8634 0L6.55974 68.0026C2.50414 65.6853 0 61.3645 0 56.684V27.2891z"/>
-        </clipPath>		
-    </svg>
-    
- 
-	
+	<div class="back-to-top"></div>
+
+	<!-- SVG masks -->
+	<svg class="svg-defs">
+		<clipPath id="avatar-box">
+			<path
+				d="M1.85379 38.4859C2.9221 18.6653 18.6653 2.92275 38.4858 1.85453 56.0986.905299 77.2792 0 94 0c16.721 0 37.901.905299 55.514 1.85453 19.821 1.06822 35.564 16.81077 36.632 36.63137C187.095 56.0922 188 77.267 188 94c0 16.733-.905 37.908-1.854 55.514-1.068 19.821-16.811 35.563-36.632 36.631C131.901 187.095 110.721 188 94 188c-16.7208 0-37.9014-.905-55.5142-1.855-19.8205-1.068-35.5637-16.81-36.63201-36.631C.904831 131.908 0 110.733 0 94c0-16.733.904831-37.9078 1.85379-55.5141z" />
+		</clipPath>
+		<clipPath id="avatar-hexagon">
+			<path
+				d="M0 27.2891c0-4.6662 2.4889-8.976 6.52491-11.2986L31.308 1.72845c3.98-2.290382 8.8697-2.305446 12.8637-.03963l25.234 14.31558C73.4807 18.3162 76 22.6478 76 27.3426V56.684c0 4.6805-2.5041 9.0013-6.5597 11.3186L44.4317 82.2915c-3.9869 2.278-8.8765 2.278-12.8634 0L6.55974 68.0026C2.50414 65.6853 0 61.3645 0 56.684V27.2891z" />
+		</clipPath>
+	</svg>
+
+
+
 	<!-- JavaScripts -->
-	<script>
-		var map = new BMapGL.Map("container");
-		var point = new BMapGL.Point(116.404, 39.915);
-		map.centerAndZoom(point, 15); 
-	</script>
+
 	<script src="assets/js/jquery-3.4.1.min.js"></script>
 	<script src="assets/js/plugins.min.js"></script>
-    <script src="assets/js/common.js"></script>
-	
-    <!-- Mapbox init -->
+	<script src="assets/js/common.js"></script>
+
+	<!-- Mapbox init -->
 	<script src="assets/js/mapbox.init.js"></script>
-	
-    <script src="assets/demo/plugins-demo.js"></script>
+
+	<script src="assets/demo/plugins-demo.js"></script>
 </body>
+
 </html>
